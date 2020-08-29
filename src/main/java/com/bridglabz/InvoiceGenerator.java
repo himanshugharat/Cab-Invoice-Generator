@@ -6,6 +6,7 @@ public class InvoiceGenerator {
     private static final double MINIMUM_FARE = 5;
     public double distance;
     public int time;
+    public RideStorage rideStorage = new RideStorage();
 
     public double calculateFare(double distance, int time) {
         this.distance = distance;
@@ -19,6 +20,14 @@ public class InvoiceGenerator {
         for (Ride ride : rides) {
             totalFare += calculateFare(ride.distance, ride.time);
         }
-        return new InvoiceSummary(rides.length,totalFare);
+        return new InvoiceSummary(rides.length, totalFare);
+    }
+
+    public void addRiders(String userId, Ride[] rides) {
+        rideStorage.addRides(userId, rides);
+    }
+
+    public InvoiceSummary getInvoiceSummary(String userId) {
+        return this.calculateFare(rideStorage.getRiders(userId));
     }
 }

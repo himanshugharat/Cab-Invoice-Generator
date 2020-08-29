@@ -32,8 +32,19 @@ public class CabInvoiceTest {
     public void givenMultipleDistanceAndTime_ShouldReturnInvoiceSummary() {
         Ride[] rides = {new Ride(2.0, 5),
                 new Ride(0.1, 1)};
-        InvoiceSummary invoiceSummary=invoiceGenerator.calculateFare(rides);
+        InvoiceSummary invoiceSummary = invoiceGenerator.calculateFare(rides);
         InvoiceSummary expectedInvoiceSummary = new InvoiceSummary(2, 30);
-        Assert.assertEquals(expectedInvoiceSummary,invoiceSummary);
+        Assert.assertEquals(expectedInvoiceSummary, invoiceSummary);
+    }
+
+    @Test
+    public void givenUserIdAndRides_ShouldReturnInvoiceSummary() {
+        String userId = "himanshu";
+        Ride[] rides = {new Ride(2.0, 5),
+                new Ride(0.1, 1)};
+        invoiceGenerator.addRiders(userId, rides);
+        InvoiceSummary invoiceSummary = invoiceGenerator.getInvoiceSummary(userId);
+        InvoiceSummary expectedSummary = new InvoiceSummary(2, 30);
+        Assert.assertEquals(expectedSummary, invoiceSummary);
     }
 }

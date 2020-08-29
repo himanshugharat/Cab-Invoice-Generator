@@ -20,5 +20,4 @@ public class InvoiceSummary {
                 totalFare == that.totalFare &&
                 average == that.average;
     }
-
 }
