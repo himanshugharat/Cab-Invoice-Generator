@@ -21,3 +21,5 @@ public class InvoiceSummary {
                 average == that.average;
     }
 }
+
+

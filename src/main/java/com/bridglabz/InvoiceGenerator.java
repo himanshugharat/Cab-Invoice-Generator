@@ -17,6 +17,7 @@ public class InvoiceGenerator {
 
 
     public void addRiders(String userId, Ride[] rides) {
+
         rideStorage.addRides(userId, rides);
     }
 
