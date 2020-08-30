@@ -1,33 +1,26 @@
 package com.bridglabz;
 
 public class InvoiceGenerator {
-    private static final double COST_PER_KM = 10;
-    private static final int TIME_PER_MIN = 1;
-    private static final double MINIMUM_FARE = 5;
-    public double distance;
-    public int time;
     public RideStorage rideStorage = new RideStorage();
 
-    public double calculateFare(double distance, int time) {
-        this.distance = distance;
-        this.time = time;
-        double totalFare = distance * COST_PER_KM + time * TIME_PER_MIN;
-        return Math.max(totalFare, MINIMUM_FARE);
+    public double calculateFare(Ride ride, RideType type) {
+        return type.calculateFare(ride);
     }
 
-    public InvoiceSummary calculateFare(Ride[] rides) {
+    public InvoiceSummary calculateFare(Ride[] rides, RideType type) {
         double totalFare = 0;
         for (Ride ride : rides) {
-            totalFare += calculateFare(ride.distance, ride.time);
+            totalFare += this.calculateFare(ride, type);
         }
         return new InvoiceSummary(rides.length, totalFare);
     }
+
 
     public void addRiders(String userId, Ride[] rides) {
         rideStorage.addRides(userId, rides);
     }
 
-    public InvoiceSummary getInvoiceSummary(String userId) {
-        return this.calculateFare(rideStorage.getRiders(userId));
+    public InvoiceSummary getInvoiceSummary(String userId, RideType type) {
+        return this.calculateFare(rideStorage.getRiders(userId), type);
     }
 }
