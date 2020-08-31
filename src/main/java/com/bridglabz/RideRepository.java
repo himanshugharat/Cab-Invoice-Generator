@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-public class RideStorage {
+public class RideRepository {
     Map<String, ArrayList<Ride>> userRides = new HashMap<>();
 
     public void addRides(String userId, Ride[] rides) {

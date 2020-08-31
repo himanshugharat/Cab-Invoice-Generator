@@ -1,7 +1,7 @@
 package com.bridglabz;
 
-public class InvoiceGenerator {
-    public RideStorage rideStorage = new RideStorage();
+public class InvoiceService {
+    public RideRepository rideRepository = new RideRepository();
 
     public double calculateFare(Ride ride, RideType type) {
         return type.calculateFare(ride);
@@ -17,11 +17,10 @@ public class InvoiceGenerator {
 
 
     public void addRiders(String userId, Ride[] rides) {
-
-        rideStorage.addRides(userId, rides);
+        rideRepository.addRides(userId, rides);
     }
 
     public InvoiceSummary getInvoiceSummary(String userId, RideType type) {
-        return this.calculateFare(rideStorage.getRiders(userId), type);
+        return this.calculateFare(rideRepository.getRiders(userId), type);
     }
 }

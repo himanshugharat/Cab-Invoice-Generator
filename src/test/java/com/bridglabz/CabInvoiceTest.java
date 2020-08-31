@@ -5,18 +5,18 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class CabInvoiceTest {
-    InvoiceGenerator invoiceGenerator = null;
+    InvoiceService invoiceService = null;
 
     @Before
     public void setup() {
-        invoiceGenerator = new InvoiceGenerator();
+        invoiceService = new InvoiceService();
     }
 
     @Test
     public void givenDistanceAndTime_WhenNormal_ShouldReturnTotalFare() {
         double distance = 2.0;
         int time = 5;
-        double totalFare = invoiceGenerator.calculateFare(new Ride(distance, time), RideType.Normal);
+        double totalFare = invoiceService.calculateFare(new Ride(distance, time), RideType.Normal);
         Assert.assertEquals(25, totalFare, 0.0);
     }
 
@@ -24,7 +24,7 @@ public class CabInvoiceTest {
     public void givenLessDistanceAndTime_WhenNormal_ShouldReturnMinimumFare() {
         double distance = 0.1;
         int time = 1;
-        double totalFare = invoiceGenerator.calculateFare(new Ride(distance, time), RideType.Normal);
+        double totalFare = invoiceService.calculateFare(new Ride(distance, time), RideType.Normal);
         Assert.assertEquals(5, totalFare, 0.0);
     }
 
@@ -32,7 +32,7 @@ public class CabInvoiceTest {
     public void givenMultipleDistanceAndTime_WhenNormal_ShouldReturnInvoiceSummary() {
         Ride[] rides = {new Ride(2.0, 5),
                 new Ride(0.1, 1)};
-        InvoiceSummary invoiceSummary = invoiceGenerator.calculateFare(rides, RideType.Normal);
+        InvoiceSummary invoiceSummary = invoiceService.calculateFare(rides, RideType.Normal);
         InvoiceSummary expectedInvoiceSummary = new InvoiceSummary(2, 30);
         Assert.assertEquals(expectedInvoiceSummary, invoiceSummary);
     }
@@ -42,17 +42,17 @@ public class CabInvoiceTest {
         String userId = "himanshu";
         Ride[] rides = {new Ride(2.0, 5),
                 new Ride(0.1, 1)};
-        invoiceGenerator.addRiders(userId, rides);
-        InvoiceSummary invoiceSummary = invoiceGenerator.getInvoiceSummary(userId, RideType.Normal);
+        invoiceService.addRiders(userId, rides);
+        InvoiceSummary invoiceSummary = invoiceService.getInvoiceSummary(userId, RideType.Normal);
         InvoiceSummary expectedSummary = new InvoiceSummary(2, 30);
         Assert.assertEquals(expectedSummary, invoiceSummary);
     }
 
     @Test
     public void givenDistanceAndTime_WhenPremium_ShouldReturnTotalFare() {
-        double distance = 2.0;
+        double distance = 1.0;
         int time = 5;
-        double totalFare = invoiceGenerator.calculateFare(new Ride(distance, time), RideType.Premium);
+        double totalFare = invoiceService.calculateFare(new Ride(distance, time), RideType.Premium);
         Assert.assertEquals(25, totalFare, 0.0);
     }
 
@@ -60,7 +60,7 @@ public class CabInvoiceTest {
     public void givenLessDistanceAndTime_WhenPremium_ShouldReturnMinimumFare() {
         double distance = 0.1;
         int time = 1;
-        double totalFare = invoiceGenerator.calculateFare(new Ride(distance, time), RideType.Premium);
+        double totalFare = invoiceService.calculateFare(new Ride(distance, time), RideType.Premium);
         Assert.assertEquals(20, totalFare, 0.0);
     }
 
@@ -68,7 +68,7 @@ public class CabInvoiceTest {
     public void givenMultipleDistanceAndTime_WhenPremium_ShouldReturnInvoiceSummary() {
         Ride[] rides = {new Ride(2.0, 5),
                 new Ride(0.1, 1)};
-        InvoiceSummary invoiceSummary = invoiceGenerator.calculateFare(rides, RideType.Premium);
+        InvoiceSummary invoiceSummary = invoiceService.calculateFare(rides, RideType.Premium);
         InvoiceSummary expectedInvoiceSummary = new InvoiceSummary(2, 60);
         Assert.assertEquals(expectedInvoiceSummary, invoiceSummary);
     }
@@ -78,8 +78,8 @@ public class CabInvoiceTest {
         String userId = "himanshu";
         Ride[] rides = {new Ride(2.0, 5),
                 new Ride(0.1, 1)};
-        invoiceGenerator.addRiders(userId, rides);
-        InvoiceSummary invoiceSummary = invoiceGenerator.getInvoiceSummary(userId, RideType.Premium);
+        invoiceService.addRiders(userId, rides);
+        InvoiceSummary invoiceSummary = invoiceService.getInvoiceSummary(userId, RideType.Premium);
         InvoiceSummary expectedSummary = new InvoiceSummary(2, 60);
         Assert.assertEquals(expectedSummary, invoiceSummary);
     }
