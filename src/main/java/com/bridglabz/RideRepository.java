@@ -9,7 +9,7 @@ public class RideRepository {
     Map<String, ArrayList<Ride>> userRides = null;
 
     public RideRepository() {
-        this.userRides=new HashMap<>();
+        this.userRides = new HashMap<>();
     }
 
     public void addRides(String userId, Ride[] rides) {
